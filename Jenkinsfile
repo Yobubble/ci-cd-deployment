@@ -127,7 +127,7 @@ pipeline {
     environment {
         registry = "yobubble62/nextjs-server"
         registryCredential = 'dockerHub'
-        dockerHome = tool name: 'myDocker', type: 'DockerTool'
+        dockerHome = tool name: 'myDocker'
     }
     stages {
         stage('Initialize') {
