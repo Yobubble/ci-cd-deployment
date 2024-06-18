@@ -127,13 +127,20 @@
 
 
   pipeline {
-    agent {
-        docker { image 'node:20.14.0-alpine3.20' }
-    }
+    //  stage('Initialize'){
+    //     def dockerHome = tool 'myDocker'
+    //     env.PATH = "${dockerHome}/bin:${env.PATH}"
+    // }
+    // agent {
+    //     docker { image 'node:20.14.0-alpine3.20' }
+    // }
+     agent {
+        label "Built-In Node"
+   }
     stages {
         stage('Test') {
             steps {
-                sh 'node --version'
+                sh 'docker --version'
             }
         }
     }
