@@ -122,25 +122,31 @@
 //   }
 // }
 
-// another alternative from ChatGPT
-
 pipeline {
-    agent any  // The entire pipeline can run on any available agent
-
+    agent any
+    environment {
+        registry = "yobubble62/nextjs-server"
+        registryCredential = 'dockerHub'
+        dockerHome = tool name: 'myDocker', type: 'DockerTool'
+    }
     stages {
-        stage('Build image') {
-            agent { label 'docker' }  // This stage runs on an agent with the 'docker' label
+        stage('Initialize') {
             steps {
                 script {
-                    def app = docker.build("yobubble62/nextjs-server:${env.BUILD_NUMBER}")
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
+                }
+            }
+        }
+        stage('Build image') {
+            steps {
+                script {
+                    app = docker.build("${registry}:${env.BUILD_NUMBER}")
                 }
             }
         }
         stage('Test image') {
-            agent { label 'docker' }  // This stage also runs on an agent with the 'docker' label
             steps {
                 script {
-                    def app = docker.image("yobubble62/nextjs-server:${env.BUILD_NUMBER}")
                     app.inside {
                         sh 'npm install'
                         sh 'npm run test'
@@ -149,24 +155,28 @@ pipeline {
             }
         }
         stage('Push image') {
-            agent { label 'docker' }  // This stage runs on an agent with the 'docker' label
             steps {
                 script {
-                    def app = docker.image("yobubble62/nextjs-server:${env.BUILD_NUMBER}")
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
                         app.push("${env.BUILD_NUMBER}")
-                        app.push("latest")
+                        // Uncomment the following line to push the latest tag as well
+                        // app.push("latest")
                     }
                 }
             }
         }
     }
-
     post {
         always {
-            echo "Pipeline completed"
+            echo "Cleaning up Docker images"
+            sh "docker rmi ${registry}:${env.BUILD_NUMBER} || true"
+        }
+        success {
+            echo "Pipeline executed successfully"
+        }
+        failure {
+            echo "Pipeline execution failed"
         }
     }
 }
-
 
