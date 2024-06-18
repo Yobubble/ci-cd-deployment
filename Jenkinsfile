@@ -23,8 +23,7 @@ pipeline{
         stage("Test"){
             steps{
                 sh 'npm install'
-                // this still not work because no test command in repo
-                // sh 'npm run test'
+                sh 'npm run test'
             }
             post{
                 always{
