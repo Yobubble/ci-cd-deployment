@@ -11,7 +11,7 @@ pipeline{
     }
     stage("Docker Image Build"){
       steps{
-        sh "docker build -t ${registry}:${env.BUILD_NUMBER}} ."
+        sh "docker build -t ${registry}:${env.BUILD_NUMBER} ."
         // withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUsername')]) {
           
         // }
