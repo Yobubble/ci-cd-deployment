@@ -99,11 +99,15 @@
 
 
 // alternative
-node {
-  stage('ensure docker is available'){
-    sh 'docker --version'
-  }
-}
+
+// node {
+//   stage('ensure docker is available'){
+//     sh 'docker --version'
+//   }
+// }
+
+
+
   // def app
   // stage('Build image') { 
   //   app = docker.build("yobubble62/nextjs-server")    
@@ -120,3 +124,17 @@ node {
   //     // app.push("latest")
   //   }    
   // }
+
+
+  pipeline {
+    agent {
+        docker { image 'node:20.14.0-alpine3.20' }
+    }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
+}
