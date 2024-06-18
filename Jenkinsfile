@@ -22,14 +22,14 @@
 
 node{
   def app
-  stage('Build image') {         
-    app = docker.build("yobubble62/go-hello-world")    
-  }     
-  stage('Test image') {           
-    app.inside {            
-      sh 'echo "Tests passed"'        
-    }    
-  }     
+  stage('Build image') {
+    app = docker.build("yobubble62/go-hello-world")
+  }
+  stage('Test image') {
+    app.inside {     
+      sh 'echo "Tests passed"'
+    }
+  }   
   // stage('Push image') {
   // }
 }
