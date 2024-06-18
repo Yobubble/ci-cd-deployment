@@ -127,45 +127,41 @@ pipeline {
     environment {
         registry = "yobubble62/nextjs-server"
         registryCredential = 'dockerHub'
-        dockerHome = tool name: 'myDocker'
     }
     stages {
-        stage('Initialize') {
-            steps {
-                script {
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
-                    sh "systemctl start docker"
-                }
-            }
+      stage('Docker Test'){
+        steps{
+          sh 'docker --version'
         }
-        stage('Build image') {
-            steps {
-                script {
-                    app = docker.build("${registry}:${env.BUILD_NUMBER}")
-                }
-            }
-        }
-        stage('Test image') {
-            steps {
-                script {
-                    app.inside {
-                        sh 'npm install'
-                        sh 'npm run test'
-                    }
-                }
-            }
-        }
-        stage('Push image') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-                        app.push("${env.BUILD_NUMBER}")
-                        // Uncomment the following line to push the latest tag as well
-                        // app.push("latest")
-                    }
-                }
-            }
-        }
+      }
+        // stage('Build image') {
+        //     steps {
+        //         script {
+        //             app = docker.build("${registry}:${env.BUILD_NUMBER}")
+        //         }
+        //     }
+        // }
+        // stage('Test image') {
+        //     steps {
+        //         script {
+        //             app.inside {
+        //                 sh 'npm install'
+        //                 sh 'npm run test'
+        //             }
+        //         }
+        //     }
+        // }
+        // stage('Push image') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+        //                 app.push("${env.BUILD_NUMBER}")
+        //                 // Uncomment the following line to push the latest tag as well
+        //                 // app.push("latest")
+        //             }
+        //         }
+        //     }
+        // }
     }
     post {
         always {
