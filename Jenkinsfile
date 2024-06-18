@@ -3,11 +3,11 @@ pipeline{
       registry = "yobubble62/nextjs-server"
     }
     agent any
-    stage('Initialize'){
-      def dockerHome = tool 'myDocker'
-      env.PATH = "${dockerHome}/bin:${env.PATH}"
-    }
     stages{
+        stage('Initialize'){
+          def dockerHome = tool 'myDocker'
+          env.PATH = "${dockerHome}/bin:${env.PATH}"
+        }
         stage("Dockerfile Build"){
             steps{
                 sh "docker build -t ${registry}:${env.BUILD_NUMBER} ."
