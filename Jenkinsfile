@@ -129,18 +129,18 @@ pipeline {
         registryCredential = 'dockerHub'
     }
     stages {
-      stage('Docker Test'){
-        steps{
-          sh 'docker --version'
+      // stage('Docker Test'){
+      //   steps{
+      //     sh 'docker --version'
+      //   }
+      // } ✅
+        stage('Build image') {
+            steps {
+                script {
+                    app = docker.build("${registry}:${env.BUILD_NUMBER}")
+                }
+            }
         }
-      }
-        // stage('Build image') {
-        //     steps {
-        //         script {
-        //             app = docker.build("${registry}:${env.BUILD_NUMBER}")
-        //         }
-        //     }
-        // }
         // stage('Test image') {
         //     steps {
         //         script {
