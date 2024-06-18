@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage("Dockerfile Build"){
             steps{
-                sh 'docker build -t ${registry}:${env.BUILD_NUMBER} .' 
+                sh "docker build -t ${registry}:${env.BUILD_NUMBER} ."
             }
             post{
                 always{
@@ -41,7 +41,7 @@ pipeline{
           steps{
             withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUsername')]) {
             sh "docker login -u ${env.dockerHubUsername} -p ${env.dockerHubPassword}"
-            sh 'docker push ${registry}:${env.BUILD_NUMBER}'
+            sh "docker push ${registry}:${env.BUILD_NUMBER}"
         }
           }
           post{
