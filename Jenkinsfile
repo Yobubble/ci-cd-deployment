@@ -134,6 +134,7 @@ pipeline {
             steps {
                 script {
                     env.PATH = "${dockerHome}/bin:${env.PATH}"
+                    sh "systemctl start docker"
                 }
             }
         }
