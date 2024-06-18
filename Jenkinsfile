@@ -99,21 +99,24 @@
 
 
 // alternative
-node {    
-  def app
-  stage('Build image') {         
-    app = docker.build("yobubble62/nextjs-server")    
-  }     
-  stage('Test image') {           
-    app.inside {       
-      sh 'npm install'
-      sh 'npm run test'
-    }    
-  }     
-  stage('Push image') {
-    docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
-      app.push("${env.BUILD_NUMBER}") 
-      // app.push("latest")
-    }    
+node {
+  stage('ensure docker is available'){
+    sh 'docker --version'
   }
 }
+  // def app
+  // stage('Build image') { 
+  //   app = docker.build("yobubble62/nextjs-server")    
+  // }     
+  // stage('Test image') {           
+  //   app.inside {       
+  //     sh 'npm install'
+  //     sh 'npm run test'
+  //   }    
+  // }     
+  // stage('Push image') {
+  //   docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
+  //     app.push("${env.BUILD_NUMBER}") 
+  //     // app.push("latest")
+  //   }    
+  // }
