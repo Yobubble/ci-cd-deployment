@@ -1,38 +1,43 @@
 pipeline{
+  agent any
   environment{
     registry = "yobubble62/go-hello-world"
   }
-  agent any
   stages{
     stage("Ensure Docker is working"){
       steps{
         sh 'docker ps'
       }
     }
+    stage("Testing"){
+      steps{
+        sh "Test passed"
+      }
+    }
     stage("Docker Image Build"){
       steps{
         sh "docker build -t ${registry}:${env.BUILD_NUMBER} ."
-        // withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUsername')]) {
-          
-        // }
+      }
+    }
+    stage("Push To DockerHub"){
+      steps{
+        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUsername')]) {
+          sh "docker login -u ${env.dockerHubUsername} -p ${env.dockerHubPassword}"
+          sh "docker push ${registry}:${env.BUILD_NUMBER}"
+        }
       }
     }
   }
+  post{
+      always{
+        sh "docker rmi ${registry}:${env.BUILD_NUMBER}"
+        echo "Sucessfully Remove ${registry}:${env.BUILD_NUMBER}"
+      }
+      success{
+          echo "Pipeline Executed Sucessfully"
+      }
+      failure{
+          echo "Pipeline Executed Failed"
+      }
+  }
 }
-
-// node{
-//   def app
-//   stage('Ensure Docker is working'){
-//     sh 'docker ps'
-//   }
-//   stage('Build image') {
-//     app = docker.build("yobubble62/go-hello-world:${env.BUILD_NUMBER}")
-//   }
-//   stage('Test image') {
-//     app.inside {     
-//       sh 'echo "Tests passed"'
-//     }
-//   }   
-//   // stage('Push image') {
-//   // }
-// }
