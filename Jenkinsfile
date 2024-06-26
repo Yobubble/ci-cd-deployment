@@ -33,10 +33,11 @@ pipeline{
         sh "ansible-playbook --syntax-check ansible_start/playbook.yaml"
       }
     }
-    stage("Run Ansible to setup Docker and Kubernetes") // right now only Docker
+    stage("Run Ansible to setup Docker and Kubernetes"){
       steps{
         sh "ansible-playbook -i hosts ansible_start/playbook.yaml"
       }
+    }
   }
   post{
       always{
