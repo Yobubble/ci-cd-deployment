@@ -4,6 +4,6 @@
   become: true
   remote_user: ubuntu
   roles:
-    - config
-    - docker
-    - kubernetes
+    - config # run all the config tasks
+    - docker # run all the docker tasks
+    - kubernetes # run all the kubernetes tasks

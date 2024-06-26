@@ -1,15 +1,16 @@
 ---
 - name: Update & Upgrade Package
   ansible.builtin.apt:
+    update_cache: true # similar to sudo apt-get update
+    upgrade: dist # similar to sudo apt-get upgrade
     state: present
-    update_cache: true
 
 - name: Install Dependencies
   ansible.builtin.apt:
+    update_cache: true # similar to sudo apt-get update
     name:
       - apt-transport-https
       - ca-certificates
       - curl
       - software-properties-common
-    state: present
-    update_cache: true
+    state: present # make sure everything is installed
