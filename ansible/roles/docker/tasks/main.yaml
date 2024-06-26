@@ -8,7 +8,7 @@
 - name: Docker GPG
   ansible.builtin.apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
-    keyring: /etc/apt/keyrings/docker.asc
+    keyring: /etc/apt/keyrings/docker.gpg
     state: present
 
 - name: Docker Repository
