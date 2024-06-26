@@ -1,0 +1,15 @@
+---
+- name: Update & Upgrade Package
+  ansible.builtin.apt:
+    state: present
+    update_cache: true
+
+- name: Install Dependencies
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    state: present
+    update_cache: true

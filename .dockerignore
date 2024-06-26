@@ -1,2 +1,5 @@
 .gitignore
 README.md
+deployment.yaml
+service.yaml
+Jenkinsfile

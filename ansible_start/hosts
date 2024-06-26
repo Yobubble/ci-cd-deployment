@@ -1,0 +1,4 @@
+[target]
+13.250.39.209 ansible_user=ubuntu ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+13.229.209.168 ansible_user=ubuntu ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+3.0.180.61 ansible_user=ubuntu ansible_ssh_common_args='-o StrictHostKeyChecking=no'
