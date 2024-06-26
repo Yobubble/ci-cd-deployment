@@ -1,4 +1,37 @@
 ---
+# - name: Create Directory for Docker GPG
+#   ansible.builtin.file:
+#     path: /etc/apt/keyrings
+#     state: directory
+#     mode: "0755"
+
+# - name: Docker GPG
+#   ansible.builtin.apt_key:
+#     url: https://download.docker.com/linux/ubuntu/gpg
+#     keyring: /etc/apt/keyrings/docker.gpg
+#     state: present
+
+# - name: Docker Repository
+#   ansible.builtin.apt_repository:
+#     repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+#     state: present
+#     filename: docker
+
+# - name: Install Docker and related packages
+#   ansible.builtin.apt:
+#     name:
+#       - docker-ce
+#       - docker-ce-cli
+#       - containerd.io
+#       - docker-buildx-plugin
+#       - docker-compose-plugin
+#     state: present
+
+# - name: Ensure Docker is installed
+#   ansible.builtin.systemd:
+#     name: docker
+#     state: started
+#     enabled: true
 - name: Create Directory for Docker GPG
   ansible.builtin.file:
     path: /etc/apt/keyrings
@@ -13,7 +46,7 @@
 
 - name: Docker Repository
   ansible.builtin.apt_repository:
-    repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable"
     state: present
     filename: docker
 
@@ -26,6 +59,7 @@
       - docker-buildx-plugin
       - docker-compose-plugin
     state: present
+    update_cache: yes
 
 - name: Ensure Docker is installed
   ansible.builtin.systemd:
