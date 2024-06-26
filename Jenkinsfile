@@ -29,14 +29,10 @@ pipeline{
         }
       }
     }
-    stage("Test & Run Ansible"){
-      steps{
-        sh "ansible-playbook --syntax-check ansible_start/playbook.yaml"
-      }
-    }
     stage("Run Ansible to setup Docker and Kubernetes"){
       steps{
-        sh "ansible-playbook -i hosts ansible_start/playbook.yaml"
+        sh "cd ansible"
+        sh "ansible-playbook -i hosts playbook.yaml"
       }
     }
   }
