@@ -1,6 +1,6 @@
 ---
-- name: Setup Docker and Kuberntes on Ubuntu Server 24.04
-  hosts: target
+- name: Docker Install on every Ubuntu server
+  hosts: all
   become: true
   remote_user: ubuntu
   roles:

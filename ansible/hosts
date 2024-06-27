@@ -1,4 +1,11 @@
-[target]
-3.0.180.61 ansible_user=ubuntu ansible_ssh_common_args="-o StrictHostKeyChecking=no"
-13.250.39.209 ansible_user=ubuntu ansible_ssh_common_args="-o StrictHostKeyChecking=no"
-54.254.3.174 ansible_user=ubuntu ansible_ssh_common_args="-o StrictHostKeyChecking=no"
+[master]
+3.0.180.61
+
+[workers]
+13.250.39.209
+54.254.3.174 
+
+[all:vars]
+ansible_user=ubuntu 
+ansible_ssh_common_args="-o StrictHostKeyChecking=no"
+ansible_python_interpreter=/usr/bin/python3

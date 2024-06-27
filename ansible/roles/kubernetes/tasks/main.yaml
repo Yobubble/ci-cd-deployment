@@ -1,1 +1,8 @@
-# TODO : Ansible script to install Kubernetes
+---
+- name: Master node setup
+  ansible.builtin.include_tasks: master.yaml
+  when: "'master' in hosts"
+
+- name: Worker node setup
+  ansible.builtin.include_tasks: worker.yaml
+  when: "'workers' in hosts"
