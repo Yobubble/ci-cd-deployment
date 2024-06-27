@@ -1,12 +1,12 @@
 ---
-- name: Install kubeadm, kubelet, kubectl
+- name: Install kubeadm, kubelet, and kubectl
   ansible.builtin.apt:
-    name:
-      - kubeadm
-      - kubelet
-      - kubectl
+    name: "{{ item }}"
     state: present
-    update_cache: true
+  loop:
+    - kubeadm
+    - kubelet
+    - kubectl
 
 - name: Disable swap (kubelet requires swap off)
   ansible.builtin.command:
