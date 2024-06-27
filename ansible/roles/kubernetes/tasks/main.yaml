@@ -1,4 +1,29 @@
 ---
+- name: Kubernetes Signing-key
+  ansible.builtin.apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Add Kubernetes Repository
+  ansible.builtin.apt_repository:
+    repo: deb http://apt.kubernetes.io/kubernetes-xenial main
+    state: present
+
+- name: Install kubeadm, kubelet, kubectl
+  ansible.builtin.apt:
+    name:
+      - kubeadm
+      - kubelet
+      - kubectl
+    state: present
+    update_cache: true
+
+- name: Disable swap (kubelet requires swap off)
+  ansible.builtin.command:
+    cmd: swapoff -a
+  register: disable_swap_output
+  changed_when: false
+
 - name: Master node setup
   ansible.builtin.include_tasks: master.yaml
   when: "'master' in group_names"
