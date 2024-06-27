@@ -4,11 +4,6 @@ pipeline{
     registry = "yobubble62/go-hello-world"
   }
   stages{
-    stage("Ensure Docker is working"){
-      steps{
-        sh 'docker ps'
-      }
-    }
     stage("Testing"){
       steps{
         sh "Test passed"
