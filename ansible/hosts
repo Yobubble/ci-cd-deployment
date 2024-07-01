@@ -1,11 +1,11 @@
-[master]
+[master] # Master Node's public IP
 3.0.180.61
 
-[workers]
+[workers] # Worker Node's public IP
 13.250.39.209
 54.254.3.174 
 
 [all:vars]
-ansible_user=ubuntu 
+ansible_user=ubuntu # Login as "ubuntu" which is user on AWS Ubuntu
 ansible_ssh_common_args="-o StrictHostKeyChecking=no"
 ansible_python_interpreter=/usr/bin/python3

@@ -1,7 +1,7 @@
 pipeline{
   agent any
   environment{
-    registry = "yobubble62/go-hello-world"
+    registry = "yobubble62/go-hello-world" // specify docker registry
   }
   stages{
     stage("Testing"){
@@ -16,7 +16,7 @@ pipeline{
     }
     stage("Push To DockerHub"){
       steps{
-        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUsername')]) {
+        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUsername')]) { 
           sh "docker login -u ${env.dockerHubUsername} -p ${env.dockerHubPassword}"
           sh "docker push ${registry}:${env.BUILD_NUMBER}"
           sh "docker tag ${registry}:${env.BUILD_NUMBER} ${registry}:latest"

@@ -1,8 +1,8 @@
 ---
 - name: Update & Upgrade Package
   ansible.builtin.apt:
-    update_cache: true # similar to sudo apt-get update
-    upgrade: dist # similar to sudo apt-get upgrade
+    update_cache: true
+    upgrade: dist
     state: present
 
 - name: Install required packages
@@ -13,8 +13,8 @@
       - curl
       - software-properties-common
       - gnupg
-    update_cache: true # similar to sudo apt-get update
-    state: present # make sure everything is installed
+    update_cache: true
+    state: present
 
 - name: Create Directory for GPG Signing-key
   ansible.builtin.file:

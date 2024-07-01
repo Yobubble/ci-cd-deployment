@@ -1,5 +1,5 @@
 ---
-- name: Docker Install on every Ubuntu server
+- name: Docker and Kubernetes Installation on servers
   hosts: all
   become: true
   remote_user: ubuntu

@@ -1,3 +1,4 @@
+# Worker Node Setup
 ---
 - name: Join worker nodes to the cluster
   ansible.builtin.command: "{{ hostvars['master']['kubeadm_output']['stdout_lines'][0] }}"

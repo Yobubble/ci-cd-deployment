@@ -1,4 +1,4 @@
-# pretty much following the docker installation guide for ubuntu server
+# docker installation "https://docs.docker.com/engine/install/ubuntu/"
 ---
 - name: Docker GPG
   ansible.builtin.apt_key:
