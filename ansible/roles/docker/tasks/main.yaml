@@ -1,11 +1,5 @@
 # pretty much following the docker installation guide for ubuntu server
 ---
-- name: Create Directory for Docker GPG
-  ansible.builtin.file:
-    path: /etc/apt/keyrings
-    state: directory
-    mode: "0755"
-
 - name: Docker GPG
   ansible.builtin.apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg

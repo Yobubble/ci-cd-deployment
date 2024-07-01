@@ -5,12 +5,19 @@
     upgrade: dist # similar to sudo apt-get upgrade
     state: present
 
-- name: Install Dependencies
+- name: Install required packages
   ansible.builtin.apt:
-    update_cache: true # similar to sudo apt-get update
     name:
       - apt-transport-https
       - ca-certificates
       - curl
       - software-properties-common
+      - gnupg
+    update_cache: true # similar to sudo apt-get update
     state: present # make sure everything is installed
+
+- name: Create Directory for GPG Signing-key
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"

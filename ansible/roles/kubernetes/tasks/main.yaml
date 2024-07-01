@@ -1,12 +1,13 @@
 ---
-- name: Kubernetes Signing-key
-  ansible.builtin.apt_key:
-    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    state: present
+- name: Add Kubernetes Signing Key
+  ansible.builtin.get_url:
+    url: https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key
+    dest: /etc/apt/keyrings/kubernetes-apt-keyring.asc
+    mode: "0644"
 
 - name: Add Kubernetes Repository
   ansible.builtin.apt_repository:
-    repo: "deb http://apt.kubernetes.io/kubernetes-xenial main"
+    repo: deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.asc] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /
     state: present
 
 - name: Install kubeadm, kubelet, kubectl
